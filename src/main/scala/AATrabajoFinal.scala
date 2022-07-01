@@ -42,14 +42,14 @@ object AATrabajoFinal {
 
     val df2 = df.drop("song", "genre", "artist")
 
-    //df2.limit(5).show()
+    df2.limit(5).show()
 
     val featureCols = Array("duration_ms", "explicit", "year", "danceability", "energy", "key", "loudness", "mode", "speechiness", "acousticness",
       "instrumentalness", "liveness" , "valence", "tempo", "indexedArtist", "indexedGenre")
     val assembler = new VectorAssembler().setInputCols(featureCols).setOutputCol("features")
     val df3 = assembler.transform(dfindex2)
 
-    val model = new LogisticRegression().setLabelCol("popularity").fit(df3)
+    /*val model = new LogisticRegression().setLabelCol("popularity").fit(df3)
     val predictions = model.transform(df3)
     /**
      *  Now we print it out.  Notice that the LR algorithm added a “prediction” column
@@ -72,8 +72,8 @@ object AATrabajoFinal {
     val ratioCorrect=correct.toDouble/counttotal.toDouble
 
     println(ratioWrong)
-    println(ratioCorrect)
-    /*val lr = new LinearRegression()
+    println(ratioCorrect)*/
+    val lr = new LinearRegression()
       .setMaxIter(10)
       .setRegParam(0.3)
       .setElasticNetParam(0.8)
@@ -90,6 +90,6 @@ object AATrabajoFinal {
     println(s"objectiveHistory: [${trainingSummary.objectiveHistory.mkString(",")}]")
     trainingSummary.residuals.show()
     println(s"RMSE: ${trainingSummary.rootMeanSquaredError}")
-    println(s"r2: ${trainingSummary.r2}")*/
+    println(s"r2: ${trainingSummary.r2}")
   }
 }
